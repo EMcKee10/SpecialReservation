@@ -1,5 +1,16 @@
 name: Special_Reservation
 version: 1.0.0
 main: io.github.emckee10.specialreservation.SR
-description: Reserves Spots on a server for Specific Users
+description: Reserves spots on a server for specific users
 author: TheITx
+commands:
+  numofreserved:
+    description: Change the number of reserved slots.
+    aliases: reserved
+    permission: Special_Reservation.numofreserved
+    permission-message: You do not have the permission to use this command.
+    usage: "Usage: /<command> [Number of reserved slots for the server]"
+permissions:
+  Special_Reservation.numofreserved:
+    description: permission for changing number of reserved slots
+    default: op
