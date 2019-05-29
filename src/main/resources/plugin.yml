@@ -4,13 +4,21 @@ main: io.github.emckee10.specialreservation.SR
 description: Reserves spots on a server for specific users
 author: TheITx
 commands:
-  numofreserved:
+  numofreservedslots:
     description: Change the number of reserved slots.
     aliases: reserved
-    permission: Special_Reservation.numofreserved
+    permission: Special_Reservation.NumOfReservedSlots
     permission-message: You do not have the permission to use this command.
     usage: "Usage: /<command> [Number of reserved slots for the server]"
+  reserveslotstoggle:
+    description: Toggles reserved slots
+    aliases: RSToggle
+    permission: Special_Reservation.ReserveSlotsToggle
+    usage: "&Incorrect command usage, try /ReserveSlotsToggle <true/false>."
 permissions:
-  Special_Reservation.numofreserved:
+  special_reservation.numofreserved:
     description: permission for changing number of reserved slots
+    default: op
+  reserveslotstoggle:
+    description: permission for toggling reserved slots
     default: op
