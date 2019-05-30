@@ -9,16 +9,20 @@ commands:
     aliases: reserved
     permission: Special_Reservation.NumOfReservedSlots
     permission-message: You do not have the permission to use this command.
-    usage: "Usage: /<command> [Number of reserved slots for the server]"
+    usage: "Usage: /<command> [Integer of reserved slots for the server]"
   reserveslotstoggle:
     description: Toggles reserved slots
     aliases: RSToggle
     permission: Special_Reservation.ReserveSlotsToggle
     usage: "&Incorrect command usage, try /ReserveSlotsToggle <true/false>."
 permissions:
+  special_reservation.specialbypass:
+    description: permission to allow a user into the reserved slots
+  special_reservation.staffbypass:
+    description: permission to allow staff to bypass server slot limit
   special_reservation.numofreserved:
     description: permission for changing number of reserved slots
     default: op
-  reserveslotstoggle:
+  special_reservation.slotstoggle:
     description: permission for toggling reserved slots
     default: op
