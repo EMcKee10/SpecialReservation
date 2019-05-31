@@ -19,8 +19,11 @@ public class SR extends JavaPlugin
   public int regularPlayers;
   public int SpecialPlayers;
   private File slotsFile;
-  private FileConfiguration fileConfiguration;
+  private File messageFile;
+  private FileConfiguration slotsConfiguration;
+  private FileConfiguration messageConfiguration;
   private Logger logger;
+  
   
   @Override
   public void onEnable()
@@ -34,27 +37,34 @@ public class SR extends JavaPlugin
       }
     
     }
-    createSlotsConfig();
+    createConfig();
     getServer().getPluginManager().registerEvents(new SRListener(this), this);
     Objects.requireNonNull(this.getCommand("NumOfReservedSlots")).setExecutor(new SRExecutor(this));
     Objects.requireNonNull(this.getCommand("ReserveSlotsToggle")).setExecutor(new SRExecutor(this));
+    Objects.requireNonNull(this.getCommand("changeFullMessage")).setExecutor(new SRExecutor(this));
   }
   
-  private void createSlotsConfig()
+  private void createConfig()
   {
     slotsFile = new File(this.getDataFolder(), "slots.yml");
+    messageFile = new File(this.getDataFolder(), "message.yml");
     
     if (!slotsFile.exists()) {
       slotsFile.getParentFile().mkdirs();
       saveResource("slots.yml", false);
     }
-    
-    fileConfiguration = new YamlConfiguration();
+    if (!messageFile.exists()) {
+      messageFile.getParentFile().mkdirs();
+      saveResource("message.yml", false);
+    }
+  
+    slotsConfiguration = new YamlConfiguration();
     try {
-      fileConfiguration.load(slotsFile);
+      slotsConfiguration.load(slotsFile);
+      messageConfiguration.load(messageFile);
     }
     catch (IOException | InvalidConfigurationException e) {
-      System.out.println("There was a problem loading your yml file");
+      System.out.println("There was a problem loading your yml files");
       e.printStackTrace();
     }
   }
@@ -78,6 +88,22 @@ public class SR extends JavaPlugin
     }
     catch (IOException e) {
       this.logger.severe("An error has occurred while trying to set the number of slots");
+    }
+  }
+  
+  public String getMessage()
+  {
+    return this.getMessageConfiguration().getString("message.full");
+  }
+  
+  public void setMessage(String message)
+  {
+    this.getMessageConfiguration().set("message.full", message);
+    try {
+      this.getMessageConfiguration().save(this.getMessageFile());
+    }
+    catch (IOException e) {
+      this.logger.severe("An error has occurred while trying to set the full message.");
     }
   }
   
@@ -131,6 +157,16 @@ public class SR extends JavaPlugin
     this.slots = slots;
   }
   
+  public File getMessageFile()
+  {
+    return slotsFile;
+  }
+  
+  public FileConfiguration getMessageConfiguration()
+  {
+    return slotsConfiguration;
+  }
+  
   public File getSlotsFile()
   {
     return slotsFile;
@@ -138,7 +174,7 @@ public class SR extends JavaPlugin
   
   public FileConfiguration getSlotsConfiguration()
   {
-    return fileConfiguration;
+    return slotsConfiguration;
   }
   
 }

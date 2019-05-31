@@ -7,14 +7,20 @@ commands:
   numofreservedslots:
     description: Change the number of reserved slots.
     aliases: reserved
-    permission: Special_Reservation.NumOfReservedSlots
+    permission: special_reservation.numofreserved
     permission-message: You do not have the permission to use this command.
     usage: "&cUsage: /<command> [Integer of reserved slots for the server]"
   reserveslotstoggle:
     description: Toggles reserved slots
     aliases: RSToggle
-    permission: Special_Reservation.ReserveSlotsToggle
+    permission: special_reservation.slotstoggle
     usage: "&cIncorrect command usage, try /ReserveSlotsToggle <true/false>."
+  changeFullMessage:
+    description: Changes Full message, use & for colors
+    aliases: FullMessage
+    permission: special_reservation.changeFullMessage
+    permission-message: You do not have the permission to use this command.
+    usage: "Usage: /<command> [message you would like to display]"
 permissions:
   special_reservation.specialbypass:
     description: permission to allow a user into the reserved slots
@@ -25,4 +31,7 @@ permissions:
     default: op
   special_reservation.slotstoggle:
     description: permission for toggling reserved slots
+    default: op
+  special_reservation.changeFullMessage:
+    description: permission to change Full Message
     default: op

@@ -41,9 +41,8 @@ public class SRListener implements Listener
         event.allow();
       }
       else {
-        event.setResult(PlayerLoginEvent.Result.KICK_FULL);
+        event.disallow(PlayerLoginEvent.Result.KICK_OTHER, sr.getMessage());
       }
-      //TODO set full customizable full message, saved in message.yml
     }
   }
   
