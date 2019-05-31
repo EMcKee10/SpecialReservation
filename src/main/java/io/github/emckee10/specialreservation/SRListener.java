@@ -23,25 +23,30 @@ public class SRListener implements Listener
   @EventHandler
   public void onLogin(PlayerLoginEvent event)
   {
-    if (sr.isToggle()) {
-      if (hasStaffPermission(event.getPlayer())) {
-        event.allow();
-        //TODO add staff toggle switch
-      }
-      else if (hasSpecialPermission(event.getPlayer()) && sr.getSpecialPlayers() >= sr.getSlots() && sr.getRegularPlayers() < getRegularPlayerSlots()) {
-        sr.setRegularPlayers(sr.getRegularPlayers() + 1);
-        event.allow();
-      }
-      else if (hasSpecialPermission(event.getPlayer()) && sr.getSpecialPlayers() < sr.getSlots()) {
-        sr.setSpecialPlayers(sr.getSpecialPlayers() + 1);
-        event.allow();
-      }
-      else if (!hasSpecialPermission(event.getPlayer()) && !hasStaffPermission(event.getPlayer()) && sr.getRegularPlayers() < getRegularPlayerSlots()) {
-        sr.setRegularPlayers(sr.getRegularPlayers() + 1);
-        event.allow();
-      }
-      else {
-        event.disallow(PlayerLoginEvent.Result.KICK_OTHER, sr.getMessage());
+    if (event.getResult() == PlayerLoginEvent.Result.KICK_FULL || (event.getResult() == PlayerLoginEvent.Result.ALLOWED))
+    {
+      if (sr.isToggle())
+      {
+        if (hasStaffPermission(event.getPlayer()))
+        {
+          event.allow();
+          //TODO add staff toggle switch
+        } else if (hasSpecialPermission(event.getPlayer()) && sr.getSpecialPlayers() >= sr.getSlots() && sr.getRegularPlayers() < getRegularPlayerSlots())
+        {
+          sr.setRegularPlayers(sr.getRegularPlayers() + 1);
+          event.allow();
+        } else if (hasSpecialPermission(event.getPlayer()) && sr.getSpecialPlayers() < sr.getSlots())
+        {
+          sr.setSpecialPlayers(sr.getSpecialPlayers() + 1);
+          event.allow();
+        } else if (!hasSpecialPermission(event.getPlayer()) && !hasStaffPermission(event.getPlayer()) && sr.getRegularPlayers() < getRegularPlayerSlots())
+        {
+          sr.setRegularPlayers(sr.getRegularPlayers() + 1);
+          event.allow();
+        } else
+        {
+          event.disallow(PlayerLoginEvent.Result.KICK_OTHER, sr.getMessage());
+        }
       }
     }
   }
