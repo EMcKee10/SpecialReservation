@@ -1,5 +1,5 @@
 name: Special_Reservation
-version: 1.0.0
+version: 0.1.1
 main: io.github.emckee10.specialreservation.SR
 description: Reserves spots on a server for specific users
 author: TheITx
@@ -9,12 +9,12 @@ commands:
     aliases: reserved
     permission: Special_Reservation.NumOfReservedSlots
     permission-message: You do not have the permission to use this command.
-    usage: "Usage: /<command> [Integer of reserved slots for the server]"
+    usage: "&cUsage: /<command> [Integer of reserved slots for the server]"
   reserveslotstoggle:
     description: Toggles reserved slots
     aliases: RSToggle
     permission: Special_Reservation.ReserveSlotsToggle
-    usage: "&Incorrect command usage, try /ReserveSlotsToggle <true/false>."
+    usage: "&cIncorrect command usage, try /ReserveSlotsToggle <true/false>."
 permissions:
   special_reservation.specialbypass:
     description: permission to allow a user into the reserved slots

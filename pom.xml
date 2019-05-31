@@ -6,7 +6,7 @@
 
     <groupId>io.github.EMcKee10</groupId>
     <artifactId>SpecialReservation</artifactId>
-    <version>1.0.0</version>
+    <version>0.1.1</version>
 
     <build>
         <plugins>
@@ -42,11 +42,5 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>me.lucko.luckperms</groupId>
-            <artifactId>luckperms-api</artifactId>
-            <version>4.4</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 </project>

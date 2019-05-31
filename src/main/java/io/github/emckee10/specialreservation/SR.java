@@ -3,6 +3,7 @@ package io.github.emckee10.specialreservation;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -15,8 +16,8 @@ public class SR extends JavaPlugin
   public boolean Toggle;
   public int slots;
   public int maxPlayers;
-  public int regularPlayers = 0;
-  public int SpecialPlayers = 0;
+  public int regularPlayers;
+  public int SpecialPlayers;
   private File slotsFile;
   private FileConfiguration fileConfiguration;
   private Logger logger;
@@ -26,9 +27,14 @@ public class SR extends JavaPlugin
   {
     Toggle = false;
     maxPlayers = this.getServer().getMaxPlayers();
+    regularPlayers = this.getServer().getOnlinePlayers().size();
+    for (Player p : this.getServer().getOnlinePlayers()) {
+      if (SRListener.hasSpecialPermission(p)) {
+        SpecialPlayers++;
+      }
+    
+    }
     createSlotsConfig();
-    
-    
     getServer().getPluginManager().registerEvents(new SRListener(this), this);
     Objects.requireNonNull(this.getCommand("NumOfReservedSlots")).setExecutor(new SRExecutor(this));
     Objects.requireNonNull(this.getCommand("ReserveSlotsToggle")).setExecutor(new SRExecutor(this));

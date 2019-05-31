@@ -28,9 +28,25 @@ public class SRExecutor implements CommandExecutor
           return true;
         }
         else {
-          sr.setSlots(SRUtil.parseInteger(args[0]));
-          sr.setLocalSlots(sr.getSlots());
-          return true;
+          if (SRUtil.parseInteger(args[0]) <= sr.getMaxPlayers()) {
+            if (SRUtil.parseInteger(args[0]) == sr.getMaxPlayers()) {
+              sender.sendMessage(SRUtil.color("&cWarning: &eNumber of reserved slots equals the capacity therefor no regular players will be able to get in."));
+            }
+    
+            sr.setSlots(SRUtil.parseInteger(args[0]));
+            sr.setLocalSlots(sr.getSlots());
+            sender.sendMessage(SRUtil.color("&l&3 Success! There are now " + args[0] + " out of " + sr.getMaxPlayers() + " reserved slots on the server!"));
+    
+            //TODO if staff toggle is off then cont these staff in warning
+            if (sr.getRegularPlayers() > 0 || sr.getSpecialPlayers() > 0) {
+              sender.sendMessage(SRUtil.color("&cWarning: &eServer isnt empty, this could effect the way the [Special_Reservations] plugin works."));
+            }
+    
+            return true;
+          }
+          else {
+            sender.sendMessage(SRUtil.color("&cInvalid option, " + args[0] + " is greater than the capacity."));
+          }
         }
       }
     }
