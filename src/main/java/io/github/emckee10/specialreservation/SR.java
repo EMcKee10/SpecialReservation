@@ -59,6 +59,7 @@ public class SR extends JavaPlugin
     }
   
     slotsConfiguration = new YamlConfiguration();
+    messageConfiguration = new YamlConfiguration();
     try {
       slotsConfiguration.load(slotsFile);
       messageConfiguration.load(messageFile);
@@ -159,12 +160,12 @@ public class SR extends JavaPlugin
   
   public File getMessageFile()
   {
-    return slotsFile;
+    return this.messageFile;
   }
   
   public FileConfiguration getMessageConfiguration()
   {
-    return slotsConfiguration;
+    return this.messageConfiguration;
   }
   
   public File getSlotsFile()
