@@ -27,8 +27,11 @@ public class SRExecutor implements CommandExecutor
       case "rstoggle":
         result = rstoggle(sender, args);
         break;
-      case "changefullmessage":
-        result = changeFullMessage(sender, args);
+      case "specialfullmessage":
+        result = changeSpecialFullMessage(sender, args);
+        break;
+      case "regularfullmessage":
+        result = changeRegularFullMessage(sender, args);
         break;
       case "specialonline":
         result = specialOnline(sender, args);
@@ -113,7 +116,7 @@ public class SRExecutor implements CommandExecutor
       return false;
   }
 
-  private boolean changeFullMessage(CommandSender sender, String[] args)
+  private boolean changeSpecialFullMessage(CommandSender sender, String[] args)
   {
     if (args.length == 0)
     {
@@ -127,8 +130,28 @@ public class SRExecutor implements CommandExecutor
         builder.append(" ").append(arg);
       }
       String message = builder.toString().trim();
-      sr.setMessage(message);
-      sender.sendMessage(SRUtil.color("&2Success! The message you display when full is: " + message));
+      sr.setSpecialMessage(message);
+      sender.sendMessage(SRUtil.color("&2Success! The special full message now will display as: " + message));
+      return true;
+    }
+  }
+
+  private boolean changeRegularFullMessage(CommandSender sender, String[] args)
+  {
+    if (args.length == 0)
+    {
+      sender.sendMessage(SRUtil.color("&cInvalid entry. You must include a message with this command"));
+      return false;
+    } else
+    {
+      StringBuilder builder = new StringBuilder();
+      for (String arg : args)
+      {
+        builder.append(" ").append(arg);
+      }
+      String message = builder.toString().trim();
+      sr.setRegularMessage(message);
+      sender.sendMessage(SRUtil.color("&2Success! The regular full message now will display as: " + message));
       return true;
     }
   }
@@ -143,7 +166,7 @@ public class SRExecutor implements CommandExecutor
     {
       if (args[0].equalsIgnoreCase("true"))
       {
-        if (!sr.Toggle)
+        if (!sr.isToggle())
         {
           sr.setToggle(true);
           sr.reload();
@@ -156,7 +179,7 @@ public class SRExecutor implements CommandExecutor
         return true;
       } else if (args[0].equalsIgnoreCase("false"))
       {
-        if (sr.Toggle)
+        if (sr.isToggle())
         {
           sr.setToggle(false);
           sender.sendMessage(SRUtil.color("&2Reserved Slots is now turned off"));

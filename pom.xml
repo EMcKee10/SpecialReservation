@@ -6,7 +6,7 @@
 
     <groupId>io.github.EMcKee10</groupId>
     <artifactId>SpecialReservation</artifactId>
-    <version>0.2.1</version>
+    <version>0.3.1</version>
 
     <build>
         <plugins>

@@ -27,15 +27,17 @@ public class SR extends JavaPlugin
   @Override
   public void onEnable()
   {
-    Toggle = false;
+
     maxPlayers = this.getServer().getMaxPlayers();
     regularPlayers = this.getServer().getOnlinePlayers().size();
     reload();
     createConfig();
+    Toggle = this.isToggle();
     getServer().getPluginManager().registerEvents(new SRListener(this), this);
     Objects.requireNonNull(this.getCommand("reserve")).setExecutor(new SRExecutor(this));
     Objects.requireNonNull(this.getCommand("rstoggle")).setExecutor(new SRExecutor(this));
-    Objects.requireNonNull(this.getCommand("changeFullMessage")).setExecutor(new SRExecutor(this));
+    Objects.requireNonNull(this.getCommand("specialFullMessage")).setExecutor(new SRExecutor(this));
+    Objects.requireNonNull(this.getCommand("regularFullMessage")).setExecutor(new SRExecutor(this));
     Objects.requireNonNull(this.getCommand("SpecialOnline")).setExecutor(new SRExecutor(this));
     Objects.requireNonNull(this.getCommand("StaffOnline")).setExecutor(new SRExecutor(this));
     Objects.requireNonNull(this.getCommand("RegularOnline")).setExecutor(new SRExecutor(this));
@@ -97,14 +99,31 @@ public class SR extends JavaPlugin
     }
   }
 
-  String getMessage()
+  String getSpecialMessage()
   {
-    return this.getMessageConfiguration().getString("message.full");
+    return this.getMessageConfiguration().getString("message.specialfull");
   }
 
-  void setMessage(String message)
+  void setSpecialMessage(String message)
   {
-    this.getMessageConfiguration().set("message.full", message);
+    this.getMessageConfiguration().set("message.specialfull", message);
+    try
+    {
+      this.getMessageConfiguration().save(this.getMessageFile());
+    } catch (IOException e)
+    {
+      this.logger.severe("An error has occurred while trying to set the full message.");
+    }
+  }
+
+  String getRegularMessage()
+  {
+    return this.getMessageConfiguration().getString("message.regularfull");
+  }
+
+  void setRegularMessage(String message)
+  {
+    this.getMessageConfiguration().set("message.regularfull", message);
     try
     {
       this.getMessageConfiguration().save(this.getMessageFile());
@@ -141,12 +160,19 @@ public class SR extends JavaPlugin
 
   boolean isToggle()
   {
-    return Toggle;
+    return this.getSlotsConfiguration().getBoolean("slots.toggle");
   }
 
   void setToggle(boolean toggle)
   {
-    Toggle = toggle;
+    this.getSlotsConfiguration().set("slots.toggle", toggle);
+    try
+    {
+      this.getSlotsConfiguration().save(this.getSlotsFile());
+    } catch (IOException e)
+    {
+      this.logger.severe("An error has occurred while trying to set the toggle.");
+    }
   }
 
   int getLocalSlots()

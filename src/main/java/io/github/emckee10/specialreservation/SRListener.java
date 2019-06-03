@@ -43,7 +43,12 @@ public class SRListener implements Listener
           event.allow();
         } else
         {
-          event.disallow(PlayerLoginEvent.Result.KICK_OTHER, SRUtil.color(sr.getMessage()));
+          if (SRUtil.hasSpecialPermission(event.getPlayer()))
+            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, SRUtil.color(sr.getSpecialMessage()));
+          else
+          {
+            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, SRUtil.color(sr.getRegularMessage()));
+          }
         }
       }
     }

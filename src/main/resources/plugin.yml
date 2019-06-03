@@ -1,7 +1,7 @@
 name: Special_Reservation
-version: 0.2.1
+version: 0.3.1
 main: io.github.emckee10.specialreservation.SR
-description: Reserves spots on a server for specific users
+description: Reserves spots on a server for 'special' users
 author: TheITx
 commands:
   reserve:
@@ -14,25 +14,31 @@ commands:
     permission: special_reservation.rstoggle
     permission-message: You do not have the permission to use this command.
     usage: "&cIncorrect command usage, try /ReserveSlotsToggle <true/false>."
-  changeFullMessage:
-    description: Changes full message, use & for colors
-    aliases: FullMessage
+  SpecialFullMessage:
+    description: Changes special full message, use & for colors
+    aliases: SMessage
+    permission: special_reservation.changeFullMessage
+    permission-message: You do not have the permission to use this command.
+    usage: "Usage: /<command> [message you would like to display]"
+  RegularFullMessage:
+    description: Changes regular full message, use & for colors
+    aliases: RMessage
     permission: special_reservation.changeFullMessage
     permission-message: You do not have the permission to use this command.
     usage: "Usage: /<command> [message you would like to display]"
   SpecialOnline:
     description: Gives you the names and a count of all players with special bypass
-    permission: special_reservation.specialonline
+    permission: special_reservation.showonline
     permission-message: You do not have the permission to use this command.
     usage: "Usage: /<command>."
   StaffOnline:
     description: Gives you the names and a count of all players with staff bypass
-    permission: special_reservation.staffonline
+    permission: special_reservation.showonline
     permission-message: You do not have the permission to use this command.
     usage: "Usage: /<command>."
   RegularOnline:
     description: Gives you the names and a count of all players with no bypasses
-    permission: special_reservation.regularonline
+    permission: special_reservation.showonline
     permission-message: You do not have the permission to use this command.
     usage: "Usage: /<command>."
     #giveStaffSlotsPermission:
@@ -52,14 +58,8 @@ permissions:
     description: permission to allow a user into the reserved slots
   special_reservation.staffbypass:
     description: permission to allow staff to bypass server slot limit
-  special_reservation.specialonline:
-    description: permission to check players with special bypass online
-    default: op
-  special_reservation.staffonline:
+  special_reservation.showonline:
     description: permission to check players with staff bypass online
-    default: op
-  special_reservation.regularonline:
-    description: permission to check players with no bypass online
     default: op
   special_reservation.reserve:
     description: permission for changing number of reserved slots
@@ -68,7 +68,7 @@ permissions:
     description: permission for toggling reserved slots
     default: op
   special_reservation.changeFullMessage:
-    description: permission to change Full Message
+    description: permission to change Full Messages
     default: op
     # special_reservation.staffslotsperm:
     #description: permission to give staff slot access (always limit override)

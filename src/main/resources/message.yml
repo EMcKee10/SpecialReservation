@@ -1,2 +1,3 @@
 message:
-  full: "&cServer is so full even the reserved slots are full! try back in a minute or two"
+  specialfull: "&cServer is so full even the reserved slots are full! try back in a minute or two"
+  regularfull: "&cServer is full and you are not a special member to access reserved slots"
