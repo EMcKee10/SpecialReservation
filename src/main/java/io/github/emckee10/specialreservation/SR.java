@@ -31,7 +31,6 @@ public class SR extends JavaPlugin
     maxPlayers = this.getServer().getMaxPlayers();
     regularPlayers = this.getServer().getOnlinePlayers().size();
     reload();
-
     createConfig();
     getServer().getPluginManager().registerEvents(new SRListener(this), this);
     Objects.requireNonNull(this.getCommand("reserve")).setExecutor(new SRExecutor(this));
