@@ -199,7 +199,7 @@ public class SRExecutor implements CommandExecutor
           //TODO if staff toggle is off then count these staff in warning
           if (sr.getRegularPlayers() > 0 || sr.getSpecialPlayers() > 0)
           {
-            sender.sendMessage(SRUtil.color("&cWarning: &eServer is not empty, this could effect the way the [Special_Reservations] plugin works."));
+            sender.sendMessage(SRUtil.color("&cWarning: &eServer is not empty, excluding staff. This could negatively effect the way the [Special_Reservations] plugin works. It is suggested, that you expel all non-staff before changing the number of reserved slots."));
           }
           return true;
         } else
