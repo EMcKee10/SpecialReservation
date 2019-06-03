@@ -13,169 +13,188 @@ import java.util.logging.Logger;
 
 public class SR extends JavaPlugin
 {
-  public boolean Toggle;
-  public int slots;
-  public int maxPlayers;
-  public int regularPlayers;
-  public int SpecialPlayers;
+  boolean Toggle;
+  private int slots;
+  private int maxPlayers;
+  private int regularPlayers;
+  private int SpecialPlayers;
   private File slotsFile;
   private File messageFile;
   private FileConfiguration slotsConfiguration;
   private FileConfiguration messageConfiguration;
   private Logger logger;
-  
-  
+
   @Override
   public void onEnable()
   {
     Toggle = false;
     maxPlayers = this.getServer().getMaxPlayers();
     regularPlayers = this.getServer().getOnlinePlayers().size();
-    for (Player p : this.getServer().getOnlinePlayers()) {
-      if (SRListener.hasSpecialPermission(p)) {
-        SpecialPlayers++;
-      }
-    
-    }
+    reload();
+
     createConfig();
     getServer().getPluginManager().registerEvents(new SRListener(this), this);
-    Objects.requireNonNull(this.getCommand("NumOfReservedSlots")).setExecutor(new SRExecutor(this));
-    Objects.requireNonNull(this.getCommand("ReserveSlotsToggle")).setExecutor(new SRExecutor(this));
+    Objects.requireNonNull(this.getCommand("reserved")).setExecutor(new SRExecutor(this));
+    Objects.requireNonNull(this.getCommand("rstoggle")).setExecutor(new SRExecutor(this));
     Objects.requireNonNull(this.getCommand("changeFullMessage")).setExecutor(new SRExecutor(this));
+    Objects.requireNonNull(this.getCommand("SpecialOnline")).setExecutor(new SRExecutor(this));
+    Objects.requireNonNull(this.getCommand("StaffOnline")).setExecutor(new SRExecutor(this));
+    Objects.requireNonNull(this.getCommand("RegularOnline")).setExecutor(new SRExecutor(this));
   }
-  
+
+
+  @Override
+  public void onDisable()
+  {
+
+  }
+
+
+  @SuppressWarnings("ResultOfMethodCallIgnored")
   private void createConfig()
   {
     slotsFile = new File(this.getDataFolder(), "slots.yml");
     messageFile = new File(this.getDataFolder(), "message.yml");
-    
-    if (!slotsFile.exists()) {
+
+    if (!slotsFile.exists())
+    {
       slotsFile.getParentFile().mkdirs();
       saveResource("slots.yml", false);
     }
-    if (!messageFile.exists()) {
+    if (!messageFile.exists())
+    {
       messageFile.getParentFile().mkdirs();
       saveResource("message.yml", false);
     }
-  
+
     slotsConfiguration = new YamlConfiguration();
     messageConfiguration = new YamlConfiguration();
-    try {
+
+    try
+    {
       slotsConfiguration.load(slotsFile);
       messageConfiguration.load(messageFile);
-    }
-    catch (IOException | InvalidConfigurationException e) {
+    } catch (IOException | InvalidConfigurationException e)
+    {
       System.out.println("There was a problem loading your yml files");
       e.printStackTrace();
     }
   }
-  
-  @Override
-  public void onDisable()
-  {
-  
-  }
-  
-  public int getSlots()
+
+  int getSlots()
   {
     return this.getSlotsConfiguration().getInt("slots.numberofreservedslots");
   }
-  
-  public void setSlots(int slots)
+
+  void setSlots(int slots)
   {
     this.getSlotsConfiguration().set("slots.numberofreservedslots", slots);
-    try {
+    try
+    {
       this.getSlotsConfiguration().save(this.getSlotsFile());
-    }
-    catch (IOException e) {
+    } catch (IOException e)
+    {
       this.logger.severe("An error has occurred while trying to set the number of slots");
     }
   }
-  
-  public String getMessage()
+
+  String getMessage()
   {
     return this.getMessageConfiguration().getString("message.full");
   }
-  
-  public void setMessage(String message)
+
+  void setMessage(String message)
   {
     this.getMessageConfiguration().set("message.full", message);
-    try {
+    try
+    {
       this.getMessageConfiguration().save(this.getMessageFile());
-    }
-    catch (IOException e) {
+    } catch (IOException e)
+    {
       this.logger.severe("An error has occurred while trying to set the full message.");
     }
   }
-  
-  public int getMaxPlayers()
+
+  int getMaxPlayers()
   {
     return maxPlayers;
   }
-  
-  public void setMaxPlayers(int maxPlayers)
-  {
-    this.maxPlayers = maxPlayers;
-  }
-  
-  public int getRegularPlayers()
+
+  int getRegularPlayers()
   {
     return regularPlayers;
   }
-  
-  public void setRegularPlayers(int regularPlayers)
+
+  void setRegularPlayers(int regularPlayers)
   {
     this.regularPlayers = regularPlayers;
   }
-  
-  public int getSpecialPlayers()
+
+  int getSpecialPlayers()
   {
     return SpecialPlayers;
   }
-  
-  public void setSpecialPlayers(int specialPlayers)
+
+  void setSpecialPlayers(int specialPlayers)
   {
     SpecialPlayers = specialPlayers;
   }
-  
-  public boolean isToggle()
+
+  boolean isToggle()
   {
     return Toggle;
   }
-  
-  public void setToggle(boolean toggle)
+
+  void setToggle(boolean toggle)
   {
     Toggle = toggle;
   }
-  
-  public int getLocalSlots()
+
+  int getLocalSlots()
   {
     return slots;
   }
-  
-  public void setLocalSlots(int slots)
+
+  void setLocalSlots(int slots)
   {
     this.slots = slots;
   }
-  
-  public File getMessageFile()
+
+  private File getMessageFile()
   {
     return this.messageFile;
   }
-  
-  public FileConfiguration getMessageConfiguration()
+
+  private FileConfiguration getMessageConfiguration()
   {
     return this.messageConfiguration;
   }
-  
-  public File getSlotsFile()
+
+  private File getSlotsFile()
   {
     return slotsFile;
   }
-  
-  public FileConfiguration getSlotsConfiguration()
+
+  private FileConfiguration getSlotsConfiguration()
   {
     return slotsConfiguration;
   }
-  
+
+  void reload()
+  {
+    setRegularPlayers(0);
+    setSpecialPlayers(0);
+    for (Player p : this.getServer().getOnlinePlayers())
+    {
+      if (!SRUtil.hasStaffPermission(p))
+      {
+        if (SRUtil.hasSpecialPermission(p))
+          setSpecialPlayers(getSpecialPlayers() + 1);
+        else
+          setRegularPlayers(getRegularPlayers());
+      }
+
+    }
+  }
+
 }

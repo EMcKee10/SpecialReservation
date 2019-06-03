@@ -1,20 +1,21 @@
 package io.github.emckee10.specialreservation;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
-public class SRUtil
+class SRUtil
 {
-  public static String color(String msg)
+  static String color(String msg)
   {
     return ChatColor.translateAlternateColorCodes('&', msg);
   }
-  
-  public static Integer parseInteger(String arg)
+
+  static Integer parseInteger(String arg)
   {
     return Integer.parseInt(arg);
   }
-  
-  public static boolean isInteger(String test)
+
+  static boolean isInteger(String test)
   {
     try {
       Integer.parseInt(test);
@@ -23,5 +24,15 @@ public class SRUtil
     catch (NumberFormatException ex) {
       return false;
     }
+  }
+
+  static boolean hasStaffPermission(Player player)
+  {
+    return player.hasPermission("special_reservation.staffbypass");
+  }
+
+  static boolean hasSpecialPermission(Player player)
+  {
+    return player.hasPermission("special_reservation.specialbypass");
   }
 }

@@ -3,13 +3,14 @@ package io.github.emckee10.specialreservation;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class SRExecutor implements CommandExecutor
 {
-  
-  public final SR sr;
-  
-  public SRExecutor(SR sr)
+
+  private final SR sr;
+
+  SRExecutor(SR sr)
   {
     this.sr = sr;
   }
@@ -29,10 +30,84 @@ public class SRExecutor implements CommandExecutor
       case "changefullmessage":
         result = changeFullMessage(sender, args);
         break;
+      case "specialonline":
+        result = specialOnline(sender, args);
+        break;
+      case "staffonline":
+        result = staffOnline(sender, args);
+        break;
+      case "regularonline":
+        result = regularOnline(sender, args);
+        break;
       default:
         result = false;
     }
     return result;
+  }
+
+  private boolean specialOnline(CommandSender sender, String[] args)
+  {
+    if (args.length == 0)
+    {
+      int count = sr.getSpecialPlayers();
+      StringBuilder name = new StringBuilder();
+      for (Player p : sr.getServer().getOnlinePlayers())
+      {
+        if (SRUtil.hasSpecialPermission(p))
+        {
+          name.append(", ").append(p.getName());
+        }
+      }
+      String message = name.toString().trim();
+      sender.sendMessage("There are " + count + " special players");
+      sender.sendMessage("These players are [" + message + "]");
+      return true;
+    } else
+      return false;
+  }
+
+  private boolean staffOnline(CommandSender sender, String[] args)
+  {
+    if (args.length == 0)
+    {
+      int count = 0;
+      StringBuilder name = new StringBuilder();
+      for (Player p : sr.getServer().getOnlinePlayers())
+      {
+        if (SRUtil.hasStaffPermission(p))
+        {
+          name.append(", ").append(p.getName());
+          count++;
+        }
+
+      }
+      String message = name.toString().trim();
+      sender.sendMessage("There are " + count + " staff players");
+      sender.sendMessage("These players are [" + message + "]");
+      return true;
+    } else
+      return false;
+  }
+
+  private boolean regularOnline(CommandSender sender, String[] args)
+  {
+    if (args.length == 0)
+    {
+      int count = sr.getRegularPlayers();
+      StringBuilder name = new StringBuilder();
+      for (Player p : sr.getServer().getOnlinePlayers())
+      {
+        if (!(SRUtil.hasSpecialPermission(p) || SRUtil.hasStaffPermission(p)))
+        {
+          name.append(", ").append(p.getName());
+        }
+      }
+      String message = name.toString().trim();
+      sender.sendMessage("There are " + count + " regular players");
+      sender.sendMessage("These players are [" + message + "]");
+      return true;
+    } else
+      return false;
   }
 
   private boolean changeFullMessage(CommandSender sender, String[] args)
@@ -67,18 +142,14 @@ public class SRExecutor implements CommandExecutor
       {
         if (!sr.Toggle)
         {
-          if (sr.getRegularPlayers() > 0 || sr.getSpecialPlayers() > 0)
-          {
-            sender.sendMessage(SRUtil.color("&cServer is not empty (op/staff not included in this), clear all regular and special players before turning [Special Reservations] on"));
-          } else
-          {
-            sr.setToggle(true);
-            sender.sendMessage(SRUtil.color("&2Reserved Slots is now turned on"));
-          }
+          sr.setToggle(true);
+          sr.reload();
+          sender.sendMessage(SRUtil.color("&2Reserved Slots is now turned on"));
         } else
         {
           sender.sendMessage(SRUtil.color("&eReserved Slots is already on"));
         }
+
         return true;
       } else if (args[0].equalsIgnoreCase("false"))
       {
@@ -102,7 +173,7 @@ public class SRExecutor implements CommandExecutor
   private boolean changeReservedNum(CommandSender sender, String[] args)
   {
 
-    if (args.length == 0 || args.length > 1)
+    if (args.length != 1)
     {
       sender.sendMessage(SRUtil.color("&cUsage: /<NumOfReservedSlots> [Integer of reserved slots for the server]"));
       return true;
