@@ -4,14 +4,14 @@ main: io.github.emckee10.specialreservation.SR
 description: Reserves spots on a server for specific users
 author: TheITx
 commands:
-  reserved:
+  reserve:
     description: Change the number of reserved slots.
-    permission: special_reservation.numofreserved
+    permission: special_reservation.reserve
     permission-message: You do not have the permission to use this command.
     usage: "&cUsage: /<command> [Integer of reserved slots for the server]"
   rstoggle:
     description: Toggles reserved slots
-    permission: special_reservation.slotstoggle
+    permission: special_reservation.rstoggle
     permission-message: You do not have the permission to use this command.
     usage: "&cIncorrect command usage, try /ReserveSlotsToggle <true/false>."
   changeFullMessage:
@@ -61,10 +61,10 @@ permissions:
   special_reservation.regularonline:
     description: permission to check players with no bypass online
     default: op
-  special_reservation.numofreserved:
+  special_reservation.reserve:
     description: permission for changing number of reserved slots
     default: op
-  special_reservation.slotstoggle:
+  special_reservation.rstoggle:
     description: permission for toggling reserved slots
     default: op
   special_reservation.changeFullMessage:

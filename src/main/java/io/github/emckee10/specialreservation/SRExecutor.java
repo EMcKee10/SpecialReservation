@@ -21,7 +21,7 @@ public class SRExecutor implements CommandExecutor
     boolean result;
     switch (command.getName().toLowerCase())
     {
-      case "reserved":
+      case "reserve":
         result = changeReservedNum(sender, args);
         break;
       case "rstoggle":
@@ -60,7 +60,8 @@ public class SRExecutor implements CommandExecutor
       }
       String message = name.toString().trim();
       sender.sendMessage("There are " + count + " special players");
-      sender.sendMessage("These players are [" + message + "]");
+      if (count != 0)
+        sender.sendMessage("These players are [" + message + "]");
       return true;
     } else
       return false;
@@ -83,7 +84,8 @@ public class SRExecutor implements CommandExecutor
       }
       String message = name.toString().trim();
       sender.sendMessage("There are " + count + " staff players");
-      sender.sendMessage("These players are [" + message + "]");
+      if (count != 0)
+        sender.sendMessage("These players are [" + message + "]");
       return true;
     } else
       return false;
@@ -104,7 +106,8 @@ public class SRExecutor implements CommandExecutor
       }
       String message = name.toString().trim();
       sender.sendMessage("There are " + count + " regular players");
-      sender.sendMessage("These players are [" + message + "]");
+      if (count != 0)
+        sender.sendMessage("These players are [" + message + "]");
       return true;
     } else
       return false;

@@ -34,7 +34,7 @@ public class SR extends JavaPlugin
 
     createConfig();
     getServer().getPluginManager().registerEvents(new SRListener(this), this);
-    Objects.requireNonNull(this.getCommand("reserved")).setExecutor(new SRExecutor(this));
+    Objects.requireNonNull(this.getCommand("reserve")).setExecutor(new SRExecutor(this));
     Objects.requireNonNull(this.getCommand("rstoggle")).setExecutor(new SRExecutor(this));
     Objects.requireNonNull(this.getCommand("changeFullMessage")).setExecutor(new SRExecutor(this));
     Objects.requireNonNull(this.getCommand("SpecialOnline")).setExecutor(new SRExecutor(this));
