@@ -6,7 +6,7 @@
 
     <groupId>io.github.EMcKee10</groupId>
     <artifactId>SpecialReservation</artifactId>
-    <version>0.1.1</version>
+    <version>0.2.1</version>
 
     <build>
         <plugins>
@@ -31,6 +31,11 @@
         <repository>
             <id>bungeecord-repo</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
+
+        <repository>
+            <id>vault-repo</id>
+            <url>http://nexus.hc.to/content/repositories/pub_releases</url>
         </repository>
     </repositories>
 
