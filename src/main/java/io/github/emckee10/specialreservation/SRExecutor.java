@@ -42,10 +42,20 @@ public class SRExecutor implements CommandExecutor
       case "regularonline":
         result = regularOnline(sender, args);
         break;
+      case "reloadsr":
+        result = reloadsr(sender, args);
+        break;
       default:
         result = false;
     }
     return result;
+  }
+
+  private boolean reloadsr(CommandSender sender, String[] args)
+  {
+    sr.reload();
+    sender.sendMessage("Reload successful! all players are accounted for.");
+    return true;
   }
 
   private boolean specialOnline(CommandSender sender, String[] args)
@@ -239,7 +249,7 @@ public class SRExecutor implements CommandExecutor
             //TODO if staff toggle is off then count these staff in warning
             if (sr.getRegularPlayers() > 0 || sr.getSpecialPlayers() > 0)
             {
-              sender.sendMessage(SRUtil.color("&cWarning: &eServer is not empty, excluding staff. This could negatively effect the way the [Special_Reservations] plugin works. It is suggested, that you expel all non-staff before changing the number of reserved slots."));
+              sender.sendMessage(SRUtil.color("&cWarning: &eServer is not empty, excluding staff. This could negatively effect the way the [Special_Reservations] plugin works. It is suggested, that you expel all non-staff and run /reloadsr command."));
             }
             return true;
           } else

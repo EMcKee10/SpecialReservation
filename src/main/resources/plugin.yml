@@ -1,5 +1,5 @@
 name: Special_Reservation
-version: 0.3.1
+version: 1.0.0
 main: io.github.emckee10.specialreservation.SR
 description: Reserves spots on a server for 'special' users
 author: TheITx
@@ -41,6 +41,11 @@ commands:
     permission: special_reservation.showonline
     permission-message: You do not have the permission to use this command.
     usage: "Usage: /<command>."
+  ReloadSR:
+    description: Reloads the plugin with the correct number of players with specific permissions.
+    permission: special_reservation.reloadsr
+    permission-message: You do not have the permission to use this command.
+    usage: "Usage: /<command>."
     #giveStaffSlotsPermission:
     #description: Gives a player staff permission. (always limit override)
     #aliases: StaffSlotsPerm
@@ -69,6 +74,8 @@ permissions:
     default: op
   special_reservation.changeFullMessage:
     description: permission to change Full Messages
+    default: op
+  special_reservation.reloadsr:
     default: op
     # special_reservation.staffslotsperm:
     #description: permission to give staff slot access (always limit override)
