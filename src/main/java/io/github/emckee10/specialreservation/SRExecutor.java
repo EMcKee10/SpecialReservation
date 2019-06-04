@@ -52,13 +52,14 @@ public class SRExecutor implements CommandExecutor
   {
     if (args.length == 0)
     {
-      int count = sr.getSpecialPlayers();
+      int count = 0;
       StringBuilder name = new StringBuilder();
       for (Player p : sr.getServer().getOnlinePlayers())
       {
         if (SRUtil.hasSpecialPermission(p))
         {
           name.append(", ").append(p.getName());
+          count++;
         }
       }
       String message = name.toString().trim();
@@ -98,13 +99,14 @@ public class SRExecutor implements CommandExecutor
   {
     if (args.length == 0)
     {
-      int count = sr.getRegularPlayers();
+      int count = 0;
       StringBuilder name = new StringBuilder();
       for (Player p : sr.getServer().getOnlinePlayers())
       {
         if (!(SRUtil.hasSpecialPermission(p) || SRUtil.hasStaffPermission(p)))
         {
           name.append(", ").append(p.getName());
+          count++;
         }
       }
       String message = name.toString().trim();
@@ -175,7 +177,6 @@ public class SRExecutor implements CommandExecutor
         {
           sender.sendMessage(SRUtil.color("&eReserved Slots is already on"));
         }
-
         return true;
       } else if (args[0].equalsIgnoreCase("false"))
       {
@@ -198,7 +199,6 @@ public class SRExecutor implements CommandExecutor
 
   private boolean changeReservedNum(CommandSender sender, String[] args)
   {
-
     if (args.length != 1)
     {
       sender.sendMessage(SRUtil.color("&cUsage: /<NumOfReservedSlots> [Integer of reserved slots for the server]"));
@@ -211,30 +211,36 @@ public class SRExecutor implements CommandExecutor
         return true;
       } else
       {
-        if (SRUtil.parseInteger(args[0]) <= sr.getMaxPlayers())
+        if ((SRUtil.parseInteger(args[0]) >= 0))
         {
-          if (SRUtil.parseInteger(args[0]) == sr.getMaxPlayers())
+          if (SRUtil.parseInteger(args[0]) <= sr.getMaxPlayers())
           {
-            sender.sendMessage(SRUtil.color("&cWarning: &eNumber of reserved slots equals the capacity, therefore no regular players will be able to get in."));
-          }
+            if (SRUtil.parseInteger(args[0]) == sr.getMaxPlayers())
+            {
+              sender.sendMessage(SRUtil.color("&cWarning: &eNumber of reserved slots equals the capacity, therefore no regular players will be able to get in."));
+            }
 
-          sr.setSlots(SRUtil.parseInteger(args[0]));
-          sr.setLocalSlots(sr.getSlots());
-          sender.sendMessage(SRUtil.color("&l&2 Success! There are now " + args[0] + " out of " + sr.getMaxPlayers() + " reserved slots on the server!"));
+            sr.setSlots(SRUtil.parseInteger(args[0]));
+            sr.setLocalSlots(sr.getSlots());
+            sender.sendMessage(SRUtil.color("&l&2 Success! There are now " + args[0] + " out of " + sr.getMaxPlayers() + " reserved slots on the server!"));
 
-          //TODO if staff toggle is off then count these staff in warning
-          if (sr.getRegularPlayers() > 0 || sr.getSpecialPlayers() > 0)
+            //TODO if staff toggle is off then count these staff in warning
+            if (sr.getRegularPlayers() > 0 || sr.getSpecialPlayers() > 0)
+            {
+              sender.sendMessage(SRUtil.color("&cWarning: &eServer is not empty, excluding staff. This could negatively effect the way the [Special_Reservations] plugin works. It is suggested, that you expel all non-staff before changing the number of reserved slots."));
+            }
+            return true;
+          } else
           {
-            sender.sendMessage(SRUtil.color("&cWarning: &eServer is not empty, excluding staff. This could negatively effect the way the [Special_Reservations] plugin works. It is suggested, that you expel all non-staff before changing the number of reserved slots."));
+            sender.sendMessage(SRUtil.color("&cInvalid option: " + args[0] + " is greater than the capacity. Capacity is set to " + sr.getMaxPlayers()));
+            return true;
           }
-          return true;
         } else
         {
-          sender.sendMessage(SRUtil.color("&cInvalid option. " + args[0] + " is greater than the capacity. Capacity is set to " + sr.getMaxPlayers()));
+          sender.sendMessage(SRUtil.color("&cInvalid option: " + args[0] + " is less than zero. You can not have a negative number of slots"));
           return true;
         }
       }
     }
-
   }
 }
