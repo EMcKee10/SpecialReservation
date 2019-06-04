@@ -58,7 +58,11 @@ public class SRExecutor implements CommandExecutor
       {
         if (SRUtil.hasSpecialPermission(p))
         {
-          name.append(", ").append(p.getName());
+          if (count == 0)
+          {
+            name.append(p.getName());
+          } else
+            name.append(", ").append(p.getName());
           count++;
         }
       }
@@ -81,7 +85,11 @@ public class SRExecutor implements CommandExecutor
       {
         if (SRUtil.hasStaffPermission(p))
         {
-          name.append(", ").append(p.getName());
+          if (count == 0)
+          {
+            name.append(p.getName());
+          } else
+            name.append(", ").append(p.getName());
           count++;
         }
 
@@ -105,7 +113,11 @@ public class SRExecutor implements CommandExecutor
       {
         if (!(SRUtil.hasSpecialPermission(p) || SRUtil.hasStaffPermission(p)))
         {
-          name.append(", ").append(p.getName());
+          if (count == 0)
+          {
+            name.append(p.getName());
+          } else
+            name.append(", ").append(p.getName());
           count++;
         }
       }
