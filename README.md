@@ -47,7 +47,7 @@ Want to know who online is special, staff, or even regular? Try /specialonline, 
 ---
 ## -How to install-
 1. Click the Release tab on this page in GitHub
-2. Find the Latest release version, and under Assets at the bottom, click on the SleepCast-x.x.x.jar
+2. Find the Latest release version, and under Assets at the bottom, click on the SpecialReservation-x.x.x.jar
 3. Place downloaded .jar file into your server's plugins folder
 4. Restart your server.
 ### Enjoy!
