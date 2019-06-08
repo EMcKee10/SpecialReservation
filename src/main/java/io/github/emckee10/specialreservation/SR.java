@@ -41,7 +41,7 @@ public class SR extends JavaPlugin
     Objects.requireNonNull(this.getCommand("SpecialOnline")).setExecutor(new SRExecutor(this));
     Objects.requireNonNull(this.getCommand("StaffOnline")).setExecutor(new SRExecutor(this));
     Objects.requireNonNull(this.getCommand("RegularOnline")).setExecutor(new SRExecutor(this));
-    Objects.requireNonNull(this.getCommand("reloadrs")).setExecutor(new SRExecutor(this));
+    Objects.requireNonNull(this.getCommand("reloadsr")).setExecutor(new SRExecutor(this));
   }
 
 
