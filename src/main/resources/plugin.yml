@@ -1,5 +1,5 @@
 name: Special_Reservation
-version: 1.0.0
+version: 1.1.0
 main: io.github.emckee10.specialreservation.SR
 description: Reserves spots on a server for 'special' users
 author: TheITx
